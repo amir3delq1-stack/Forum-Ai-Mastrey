@@ -9,13 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const successModal = document.getElementById('success-modal');
     const closeModalBtn = document.getElementById('close-modal-btn');
     const modalConfirmBtn = document.getElementById('modal-whatsapp-btn');
-    const adminTrigger = document.getElementById('admin-trigger');
-    const adminDrawer = document.getElementById('admin-drawer');
-    const adminCloseBtn = document.getElementById('admin-close-btn');
-    const adminCountEl = document.getElementById('admin-total-count');
-    const adminListEl = document.getElementById('admin-entries-list');
-    const exportCsvBtn = document.getElementById('btn-export-csv');
-    const clearDataBtn = document.getElementById('btn-clear-data');
 
     // Web Audio Synthesizer for high-tech micro-interactions
     const playCyberSound = (type = 'click') => {
@@ -208,8 +201,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const radio = defaultCard.querySelector('input[type="radio"]');
             if (radio) radio.checked = true;
         }
-
-        updateAdminEntries();
     });
 
     function showFieldError(inputEl, message) {
@@ -315,110 +306,4 @@ document.addEventListener('DOMContentLoaded', () => {
         list.unshift(item);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
     }
-
-    function updateAdminEntries() {
-        const list = getRegistrations();
-        if (adminCountEl) {
-            adminCountEl.textContent = list.length;
-        }
-
-        if (!adminListEl) return;
-
-        if (list.length === 0) {
-            adminListEl.innerHTML = '<div style="text-align: center; color: #64748b; padding: 30px 10px;">لا يوجد مسجلين حتى الآن. كن أول من يسجل!</div>';
-            return;
-        }
-
-        adminListEl.innerHTML = list
-            .map(
-                (item, index) => `
-            <div class="admin-entry-card">
-                <div class="name">${index + 1}. ${escapeHtml(item.name)}</div>
-                <div class="details">
-                    📱 ${escapeHtml(item.phone)} &nbsp;|&nbsp; 🎓 ${escapeHtml(item.university)}
-                </div>
-                <div class="details" style="color: #38bdf8; margin-top: 4px;">
-                    🎯 ${escapeHtml(item.goalText)}
-                </div>
-                <div class="details" style="font-size: 0.75rem; margin-top: 4px; color: #64748b;">
-                    🕒 ${escapeHtml(item.registeredAt)}
-                </div>
-            </div>
-        `
-            )
-            .join('');
-    }
-
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
-    }
-
-    // Admin Toggle
-    if (adminTrigger && adminDrawer) {
-        adminTrigger.addEventListener('click', () => {
-            adminDrawer.classList.toggle('open');
-            updateAdminEntries();
-        });
-    }
-
-    if (adminCloseBtn && adminDrawer) {
-        adminCloseBtn.addEventListener('click', () => {
-            adminDrawer.classList.remove('open');
-        });
-    }
-
-    // Export CSV
-    if (exportCsvBtn) {
-        exportCsvBtn.addEventListener('click', () => {
-            const list = getRegistrations();
-            if (list.length === 0) {
-                alert('لا توجد بيانات مسجلين لتصديرها حالياً.');
-                return;
-            }
-
-            // CSV with UTF-8 BOM for Arabic compatibility in Microsoft Excel
-            let csvContent = '\uFEFF';
-            csvContent += 'م,الاسم,رقم الواتساب,الجامعة / الكلية,الهدف من الحضور,تاريخ التسجيل\n';
-
-            list.forEach((item, index) => {
-                const row = [
-                    index + 1,
-                    `"${(item.name || '').replace(/"/g, '""')}"`,
-                    `"${(item.phone || '').replace(/"/g, '""')}"`,
-                    `"${(item.university || '').replace(/"/g, '""')}"`,
-                    `"${(item.goalText || '').replace(/"/g, '""')}"`,
-                    `"${(item.registeredAt || '').replace(/"/g, '""')}"`
-                ];
-                csvContent += row.join(',') + '\n';
-            });
-
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.setAttribute('href', url);
-            link.setAttribute('download', `AI_Mastery_Attendees_${new Date().toISOString().slice(0, 10)}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        });
-    }
-
-    // Clear Data
-    if (clearDataBtn) {
-        clearDataBtn.addEventListener('click', () => {
-            if (confirm('هل أنت متأكد من رغبتك في مسح جميع بيانات المسجلين المحفوظة محلياً؟')) {
-                localStorage.removeItem(STORAGE_KEY);
-                updateAdminEntries();
-            }
-        });
-    }
-
-    // Initial setup
-    updateAdminEntries();
 });
