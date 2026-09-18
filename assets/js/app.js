@@ -159,19 +159,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Save to LocalStorage
         saveRegistration(registrationData);
 
-        // Get updated total count
-        const totalAttendees = getTotalCount();
-
         // Populate Success Modal
         document.getElementById('summary-name').textContent = registrationData.name;
         document.getElementById('summary-phone').textContent = registrationData.phone;
         document.getElementById('summary-university').textContent = registrationData.university;
         document.getElementById('summary-goal').textContent = registrationData.goalText;
-
-        const modalRankEl = document.getElementById('modal-rank-num');
-        if (modalRankEl) {
-            modalRankEl.textContent = '#' + totalAttendees;
-        }
 
         // Organizer WhatsApp Number (Amir Adel Eid)
         const ORGANIZER_WHATSAPP = '201098021457';
@@ -186,7 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
 📱 *رقم الواتساب:* ${registrationData.phone}
 🎓 *الجامعة / التخصص:* ${registrationData.university}
 🎯 *الهدف من الحضور:* ${registrationData.goalText}
-🔢 *رقم التسجيل:* المشترك رقم #${totalAttendees}
 🕒 *توقيت التسجيل:* ${registrationData.registeredAt}
 🔖 *كود الحجز:* #${registrationData.id}
 ━━━━━━━━━━━━━━━
@@ -198,10 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Launch Confetti & Sounds
         playCyberSound('success');
         triggerConfetti();
-
-        // Animate live counter up and show celebration toast
-        updateLiveCounters(true);
-        showLiveToast(`🎉 انضم ${registrationData.name} إلى AI MASTERY الآن! (المشترك رقم #${totalAttendees})`);
 
         // Open Modal
         successModal.classList.add('active');
@@ -422,67 +409,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Live Attendees Counter & Live Toast Logic
-    const BASE_ATTENDEES_OFFSET = 0; // Starts from actual real registered attendees count
-
-    function getTotalCount() {
-        return BASE_ATTENDEES_OFFSET + getRegistrations().length;
-    }
-
-    function updateLiveCounters(animate = false) {
-        const total = getTotalCount();
-        const liveDisplay = document.getElementById('live-counter-display');
-        const seatsDisplay = document.getElementById('seats-count-num');
-        const adminDisplay = document.getElementById('admin-total-count');
-
-        if (liveDisplay) {
-            if (animate) {
-                liveDisplay.classList.add('bump');
-                setTimeout(() => liveDisplay.classList.remove('bump'), 800);
-            }
-            liveDisplay.textContent = total;
-        }
-
-        if (seatsDisplay) {
-            if (animate) {
-                seatsDisplay.classList.add('bump');
-                setTimeout(() => seatsDisplay.classList.remove('bump'), 800);
-            }
-            seatsDisplay.textContent = total;
-        }
-
-        if (adminDisplay) {
-            adminDisplay.textContent = total;
-        }
-    }
-
-    let toastTimeout;
-    function showLiveToast(message) {
-        const toast = document.getElementById('live-toast');
-        const toastText = document.getElementById('toast-text');
-        if (!toast || !toastText) return;
-
-        toastText.textContent = message;
-        toast.classList.add('show');
-
-        clearTimeout(toastTimeout);
-        toastTimeout = setTimeout(() => {
-            toast.classList.remove('show');
-        }, 5000);
-    }
-
     // Clear Data
     if (clearDataBtn) {
         clearDataBtn.addEventListener('click', () => {
             if (confirm('هل أنت متأكد من رغبتك في مسح جميع بيانات المسجلين المحفوظة محلياً؟')) {
                 localStorage.removeItem(STORAGE_KEY);
                 updateAdminEntries();
-                updateLiveCounters(false);
             }
         });
     }
 
     // Initial setup
     updateAdminEntries();
-    updateLiveCounters(false);
 });
