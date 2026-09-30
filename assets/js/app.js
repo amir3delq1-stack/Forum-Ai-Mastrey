@@ -163,9 +163,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // WhatsApp Confirmation Message Formatted for Amir
         const messageText = 
-`🚀 *تسجيل جديد في سيشن AI MASTERY*
+`🚀 *تسجيل جديد في سِشن الذكاء الاصطناعي (AI MASTERY)*
 
-مرحباً م. أمير عادل، أود تأكيد انضمامي للسيشن وهذه بياناتي:
+مرحباً م. أمير عادل، لقد قمت بالتسجيل في سِشن الذكاء الاصطناعي (موعد المحاضرة: الجمعة 8:00 مساءً) وهذه بياناتي:
 ━━━━━━━━━━━━━━━
 👤 *الاسم:* ${registrationData.name}
 📱 *رقم الواتساب:* ${registrationData.phone}
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 🕒 *توقيت التسجيل:* ${registrationData.registeredAt}
 🔖 *كود الحجز:* #${registrationData.id}
 ━━━━━━━━━━━━━━━
-✨ يرجى تأكيد حجز مقعدي وإرسال رابط وموعد السيشن. شكراً لك!`;
+✨ في انتظار رسالة التأكيد التلقائية ورابط حضور المحاضرة. شكراً جزيلاً!`;
 
         const whatsappUrl = `https://wa.me/${ORGANIZER_WHATSAPP}?text=${encodeURIComponent(messageText)}`;
         modalConfirmBtn.href = whatsappUrl;

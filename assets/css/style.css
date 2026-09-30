@@ -208,6 +208,38 @@ body {
     50% { transform: scale(1.6); opacity: 0.4; }
 }
 
+.session-schedule-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 7px clamp(14px, 3.5vw, 22px);
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.12), rgba(155, 81, 224, 0.15));
+    border: 1px solid rgba(0, 242, 254, 0.4);
+    border-radius: 50px;
+    font-size: clamp(0.85rem, 2.5vw, 0.98rem);
+    color: #fff;
+    margin-bottom: clamp(14px, 2.5vw, 20px);
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+    backdrop-filter: blur(10px);
+    max-width: 100%;
+    flex-wrap: wrap;
+}
+
+.session-schedule-pill i {
+    color: var(--cyan-neon);
+}
+
+.session-schedule-pill strong {
+    color: var(--cyan-neon);
+    font-weight: 800;
+}
+
+.session-schedule-pill .pill-divider {
+    opacity: 0.4;
+    margin: 0 4px;
+}
+
 .main-title {
     font-family: var(--font-tech);
     font-size: clamp(2rem, 7.5vw, 3.6rem);
@@ -1075,6 +1107,120 @@ body {
     margin-bottom: clamp(16px, 3.5vw, 22px);
     line-height: 1.55;
     padding: 0 6px;
+}
+
+/* Official Confirmation Auto Message Card */
+.confirmation-auto-message {
+    background: linear-gradient(145deg, rgba(16, 185, 129, 0.12), rgba(0, 242, 254, 0.08));
+    border: 1.5px solid rgba(16, 185, 129, 0.5);
+    border-radius: var(--radius-md);
+    padding: clamp(14px, 3.5vw, 20px);
+    margin-bottom: clamp(16px, 3.5vw, 22px);
+    text-align: right;
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2), inset 0 0 20px rgba(0, 242, 254, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.confirmation-auto-message::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(to bottom, #10b981, #00f2fe);
+}
+
+.cam-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: clamp(0.92rem, 2.8vw, 1.05rem);
+    font-weight: 800;
+    color: #10b981;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cam-highlight {
+    font-size: clamp(0.94rem, 2.8vw, 1.08rem);
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.65;
+    margin-bottom: 12px;
+}
+
+.cam-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: clamp(0.86rem, 2.5vw, 0.98rem);
+    color: #e2e8f0;
+    margin-bottom: 10px;
+    line-height: 1.55;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+}
+
+.cam-item.time i {
+    color: #fbbf24;
+    font-size: 1.15rem;
+    margin-top: 2px;
+}
+
+.cam-item.time strong {
+    color: #fbbf24;
+}
+
+.cam-item.link i {
+    color: var(--cyan-neon);
+    font-size: 1.15rem;
+    margin-top: 2px;
+}
+
+.cam-ready {
+    font-size: clamp(1rem, 3vw, 1.15rem);
+    font-weight: 800;
+    color: #f97316;
+    margin-top: 14px;
+    margin-bottom: 4px;
+    text-shadow: 0 0 10px rgba(249, 115, 22, 0.4);
+}
+
+.cam-footer-text {
+    font-size: clamp(0.9rem, 2.6vw, 1rem);
+    font-weight: 700;
+    color: var(--cyan-neon);
+    line-height: 1.55;
+    text-shadow: 0 0 12px rgba(0, 242, 254, 0.3);
+}
+
+.modal-whatsapp-note {
+    font-size: clamp(0.82rem, 2.4vw, 0.92rem);
+    color: #cbd5e1;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.modal-whatsapp-note i {
+    color: #25d366;
+    font-size: 1.1rem;
+    vertical-align: middle;
+}
+
+.summary-header {
+    font-weight: 700;
+    color: var(--text-highlight);
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+    padding-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .registration-summary-box {
